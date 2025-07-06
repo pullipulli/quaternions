@@ -1,0 +1,243 @@
+[gd_scene load_steps=12 format=3 uid="uid://234byr7lj5e0"]
+
+[ext_resource type="Script" uid="uid://eepixcahma50" path="res://scripts/gimbals_order_select.gd" id="1_jyhfs"]
+[ext_resource type="Script" uid="uid://7rr8sr12xxpq" path="res://scripts/main.gd" id="1_tbgi4"]
+[ext_resource type="Script" uid="uid://clj201yokawbc" path="res://scripts/camera_movement.gd" id="2_tbgi4"]
+[ext_resource type="Script" uid="uid://bf4n8thsveerg" path="res://scripts/gimbals.gd" id="5_tbgi4"]
+[ext_resource type="Script" uid="uid://cf3q6pe61314i" path="res://scripts/show_two_points_direction.gd" id="5_tefeu"]
+[ext_resource type="Script" uid="uid://ba7toq55o161u" path="res://scripts/axis_line.gd" id="6_tefeu"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(1, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+bg_color = Color(0, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0, 0, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tefeu"]
+albedo_color = Color(0, 0.771347, 0.771347, 1)
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_tefeu"]
+
+[node name="Main" type="Node3D" node_paths=PackedStringArray("gimbals_ui", "quaternions_ui", "x_slider", "y_slider", "z_slider", "quaternion_slider", "quaternion_angle_label")]
+script = ExtResource("1_tbgi4")
+gimbals_ui = NodePath("UI/GimbalsUI")
+quaternions_ui = NodePath("UI/QuaternionUI")
+x_slider = NodePath("UI/GimbalsUI/EulerAnglesContainer/SplitContainer/XSlider")
+y_slider = NodePath("UI/GimbalsUI/EulerAnglesContainer/HSplitContainer/YSlider")
+z_slider = NodePath("UI/GimbalsUI/EulerAnglesContainer/HSplitContainer2/ZSlider")
+quaternion_slider = NodePath("UI/QuaternionUI/Angle")
+quaternion_angle_label = NodePath("UI/QuaternionUI/AngleLabel")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="GimbalsUI" type="Node2D" parent="UI"]
+
+[node name="GimbalsOrderSelect" type="OptionButton" parent="UI/GimbalsUI"]
+offset_left = 14.0
+offset_top = 260.0
+offset_right = 100.0
+offset_bottom = 310.0
+theme_override_font_sizes/font_size = 30
+selected = 0
+item_count = 6
+popup/item_0/text = "XYZ"
+popup/item_0/id = 0
+popup/item_1/text = "XZY"
+popup/item_1/id = 1
+popup/item_2/text = "YZX"
+popup/item_2/id = 2
+popup/item_3/text = "YXZ"
+popup/item_3/id = 3
+popup/item_4/text = "ZXY"
+popup/item_4/id = 4
+popup/item_5/text = "ZYX"
+popup/item_5/id = 5
+script = ExtResource("1_jyhfs")
+
+[node name="EulerAnglesContainer" type="VBoxContainer" parent="UI/GimbalsUI"]
+offset_left = 22.0
+offset_top = 347.0
+offset_right = 309.0
+offset_bottom = 497.0
+alignment = 1
+
+[node name="SplitContainer" type="HSplitContainer" parent="UI/GimbalsUI/EulerAnglesContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="Label" type="Label" parent="UI/GimbalsUI/EulerAnglesContainer/SplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+text = "X"
+
+[node name="XSlider" type="HSlider" parent="UI/GimbalsUI/EulerAnglesContainer/SplitContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_jyhfs")
+min_value = -180.0
+max_value = 180.0
+step = 10.0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="UI/GimbalsUI/EulerAnglesContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="Label" type="Label" parent="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer"]
+layout_mode = 2
+text = "Y"
+
+[node name="YSlider" type="HSlider" parent="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_tbgi4")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_tbgi4")
+min_value = -180.0
+max_value = 180.0
+step = 10.0
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="UI/GimbalsUI/EulerAnglesContainer"]
+layout_mode = 2
+dragging_enabled = false
+
+[node name="Label" type="Label" parent="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer2"]
+layout_mode = 2
+text = "Z"
+
+[node name="ZSlider" type="HSlider" parent="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+theme_override_styles/grabber_area = SubResource("StyleBoxFlat_tefeu")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxFlat_tefeu")
+min_value = -180.0
+max_value = 180.0
+step = 10.0
+
+[node name="min" type="Label" parent="UI/GimbalsUI"]
+offset_left = 22.0
+offset_top = 357.0
+offset_right = 62.0
+offset_bottom = 380.0
+size_flags_horizontal = 0
+text = "-180°"
+
+[node name="max" type="Label" parent="UI/GimbalsUI"]
+offset_left = 289.0
+offset_top = 357.0
+offset_right = 324.0
+offset_bottom = 380.0
+size_flags_horizontal = 8
+text = "180°"
+
+[node name="TutorialText" type="Label" parent="UI"]
+layout_mode = 0
+offset_top = -2.0
+offset_right = 395.0
+offset_bottom = 259.0
+text = "COMANDI:
+- Shift per cambiare tra modalità
+   puntamento/movimento
+- Quando in modalità movimento:
+    * WASD o le freccette per muoversi nello spazio
+    * Q ed E per muoversi verticalmente
+    * Muovere il mouse per ruotare la visuale
+- Quando in modalità puntamento, è possibile 
+  usare i bottoni della UI:"
+
+[node name="switch_rotation_mode" type="CheckButton" parent="UI"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 229.0
+offset_right = 58.0
+offset_bottom = 262.0
+button_pressed = true
+text = "Quaternion"
+
+[node name="EulerLabel" type="Label" parent="UI/switch_rotation_mode"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 2.0
+offset_top = -11.5
+offset_right = 42.0
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "Euler"
+
+[node name="QuaternionUI" type="Node2D" parent="UI"]
+visible = false
+position = Vector2(0, 339)
+
+[node name="AngleLabel" type="Label" parent="UI/QuaternionUI"]
+offset_right = 163.0
+offset_bottom = 23.0
+text = "0 °"
+horizontal_alignment = 1
+
+[node name="Angle" type="HSlider" parent="UI/QuaternionUI"]
+offset_top = 29.0
+offset_right = 163.0
+offset_bottom = 45.0
+min_value = -180.0
+max_value = 180.0
+
+[node name="RotateButton" type="Button" parent="UI/QuaternionUI"]
+offset_left = 174.0
+offset_top = 19.0
+offset_right = 234.0
+offset_bottom = 50.0
+text = "Rotate"
+
+[node name="QuaternionLabel" type="Label" parent="UI/QuaternionUI"]
+offset_top = 50.0
+offset_right = 311.0
+offset_bottom = 73.0
+text = "Verrà applicato il seguente quaternione:"
+
+[node name="QuaternionResult" type="RichTextLabel" parent="UI/QuaternionUI"]
+offset_top = 74.0
+offset_right = 456.0
+offset_bottom = 97.0
+bbcode_enabled = true
+scroll_active = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.476361, -0.228485, 0.849043, 0, 0.965645, 0.259864, -0.87925, -0.123789, 0.459996, 2.3905, 0.975525, 0.97574)
+script = ExtResource("2_tbgi4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.205828, 0.978588, 0, -0.978588, 0.205828, -1.77577, 5.47432, 0)
+
+[node name="GimbalsAndAirplane" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("5_tbgi4")
+
+[node name="ShowTwoPointsDirection" type="Node" parent="." node_paths=PackedStringArray("quaternion_result_label")]
+unique_name_in_owner = true
+script = ExtResource("5_tefeu")
+AXIS_MULTIPLIER = 2.0
+quaternion_result_label = NodePath("../UI/QuaternionUI/QuaternionResult")
+
+[node name="AxisLine" type="MeshInstance3D" parent="ShowTwoPointsDirection"]
+unique_name_in_owner = true
+material_override = SubResource("StandardMaterial3D_tefeu")
+mesh = SubResource("ImmediateMesh_tefeu")
+script = ExtResource("6_tefeu")
+
+[connection signal="item_selected" from="UI/GimbalsUI/GimbalsOrderSelect" to="UI/GimbalsUI/GimbalsOrderSelect" method="_on_item_selected"]
+[connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/SplitContainer/XSlider" to="." method="_on_x_slider_value_changed"]
+[connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer/YSlider" to="." method="_on_y_slider_value_changed"]
+[connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer2/ZSlider" to="." method="_on_z_slider_value_changed"]
+[connection signal="pressed" from="UI/switch_rotation_mode" to="." method="_on_switch_rotation_mode_pressed"]
+[connection signal="value_changed" from="UI/QuaternionUI/Angle" to="." method="_on_quaternion_angle_value_changed"]
+[connection signal="button_up" from="UI/QuaternionUI/RotateButton" to="." method="_on_rotate_quaternion_button_button_up"]

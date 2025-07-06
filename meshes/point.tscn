@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://ba4uhs32ufieu"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_jsd5a"]
+radius = 0.1
+height = 0.2
+
+[node name="Point" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_jsd5a")
