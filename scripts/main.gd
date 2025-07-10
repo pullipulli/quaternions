@@ -91,3 +91,4 @@ func _on_reset_button_up() -> void:
 	set_sliders(Vector3.ZERO)
 	%ShowTwoPointsDirection.reset_quaternion()
 	_on_reset_quaternion_angle()
+	%Camera3D.reset_camera()

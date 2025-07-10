@@ -67,8 +67,6 @@ func calculate_quaternion(angle : float):
 	quaternion_string = MathUtils.decimal_to_string(real_component) + MathUtils.decimal_to_string(i_component) + "i" + \
 			MathUtils.decimal_to_string(j_component) + "j" + MathUtils.decimal_to_string(k_component) + "k"
 	
-	print(quaternion_string)
-	
 	quaternion_result_label.text = quaternion_string
 	
 func rotate_around_axis(angle : float):

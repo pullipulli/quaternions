@@ -7,6 +7,11 @@ var ROTATION_SENSITIVITY : float = 0.005
 
 var movement_enabled : bool = false
 
+var initial_position : Vector3
+
+func _init() -> void:
+	initial_position = position
+
 func _unhandled_input(event: InputEvent) -> void:
 	if not movement_enabled:
 		return
@@ -45,3 +50,6 @@ func calculate_move_direction(input_dir: Vector3) -> Vector3:
 	direction += cam_basis.y * input_dir.y  # Su/Giù
 
 	return direction.normalized()
+	
+func reset_camera():
+	position = initial_position
