@@ -38,10 +38,10 @@ anchors_preset = 0
 [node name="GimbalsUI" type="Node2D" parent="UI"]
 
 [node name="GimbalsOrderSelect" type="OptionButton" parent="UI/GimbalsUI"]
-offset_left = 14.0
-offset_top = 260.0
-offset_right = 100.0
-offset_bottom = 310.0
+offset_left = 16.0
+offset_top = 72.0
+offset_right = 102.0
+offset_bottom = 122.0
 theme_override_font_sizes/font_size = 30
 selected = 0
 item_count = 6
@@ -60,10 +60,10 @@ popup/item_5/id = 5
 script = ExtResource("1_jyhfs")
 
 [node name="EulerAnglesContainer" type="VBoxContainer" parent="UI/GimbalsUI"]
-offset_left = 22.0
-offset_top = 347.0
-offset_right = 309.0
-offset_bottom = 497.0
+offset_left = 16.0
+offset_top = 192.0
+offset_right = 303.0
+offset_bottom = 342.0
 alignment = 1
 
 [node name="SplitContainer" type="HSplitContainer" parent="UI/GimbalsUI/EulerAnglesContainer"]
@@ -119,42 +119,41 @@ max_value = 180.0
 step = 10.0
 
 [node name="min" type="Label" parent="UI/GimbalsUI"]
-offset_left = 22.0
-offset_top = 357.0
-offset_right = 62.0
-offset_bottom = 380.0
+offset_left = 16.0
+offset_top = 202.0
+offset_right = 56.0
+offset_bottom = 225.0
 size_flags_horizontal = 0
 text = "-180°"
 
 [node name="max" type="Label" parent="UI/GimbalsUI"]
-offset_left = 289.0
-offset_top = 357.0
-offset_right = 324.0
-offset_bottom = 380.0
+offset_left = 283.0
+offset_top = 202.0
+offset_right = 318.0
+offset_bottom = 225.0
 size_flags_horizontal = 8
 text = "180°"
 
-[node name="TutorialText" type="Label" parent="UI"]
-layout_mode = 0
-offset_top = -2.0
-offset_right = 395.0
-offset_bottom = 259.0
-text = "COMANDI:
-- Shift per cambiare tra modalità
-   puntamento/movimento
-- Quando in modalità movimento:
-    * WASD o le freccette per muoversi nello spazio
-    * Q ed E per muoversi verticalmente
-    * Muovere il mouse per ruotare la visuale
-- Quando in modalità puntamento, è possibile 
-  usare i bottoni della UI:"
+[node name="GimbalLockButton" type="Button" parent="UI/GimbalsUI"]
+offset_left = 16.0
+offset_top = 145.0
+offset_right = 124.0
+offset_bottom = 176.0
+text = "Gimbal Lock!"
+
+[node name="GimbalLock2Button" type="Button" parent="UI/GimbalsUI"]
+offset_left = 146.0
+offset_top = 145.0
+offset_right = 254.0
+offset_bottom = 176.0
+text = "Gimbal Lock (2)!"
 
 [node name="switch_rotation_mode" type="CheckButton" parent="UI"]
 layout_mode = 0
-offset_left = 14.0
-offset_top = 229.0
-offset_right = 58.0
-offset_bottom = 262.0
+offset_left = 8.0
+offset_top = 20.0
+offset_right = 146.0
+offset_bottom = 53.0
 button_pressed = true
 text = "Quaternion"
 
@@ -175,7 +174,7 @@ text = "Euler"
 
 [node name="QuaternionUI" type="Node2D" parent="UI"]
 visible = false
-position = Vector2(0, 339)
+position = Vector2(16, 72)
 
 [node name="AngleLabel" type="Label" parent="UI/QuaternionUI"]
 offset_right = 163.0
@@ -210,6 +209,14 @@ offset_bottom = 97.0
 bbcode_enabled = true
 scroll_active = false
 
+[node name="ResetButton" type="Button" parent="UI"]
+layout_mode = 0
+offset_left = 204.0
+offset_top = 25.0
+offset_right = 258.0
+offset_bottom = 56.0
+text = "RESET"
+
 [node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(0.476361, -0.228485, 0.849043, 0, 0.965645, 0.259864, -0.87925, -0.123789, 0.459996, 2.3905, 0.975525, 0.97574)
@@ -238,6 +245,9 @@ script = ExtResource("6_tefeu")
 [connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/SplitContainer/XSlider" to="." method="_on_x_slider_value_changed"]
 [connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer/YSlider" to="." method="_on_y_slider_value_changed"]
 [connection signal="value_changed" from="UI/GimbalsUI/EulerAnglesContainer/HSplitContainer2/ZSlider" to="." method="_on_z_slider_value_changed"]
+[connection signal="button_up" from="UI/GimbalsUI/GimbalLockButton" to="GimbalsAndAirplane" method="_on_gimbal_lock_button_up"]
+[connection signal="button_up" from="UI/GimbalsUI/GimbalLock2Button" to="GimbalsAndAirplane" method="_on_gimbal_lock2_button_up"]
 [connection signal="pressed" from="UI/switch_rotation_mode" to="." method="_on_switch_rotation_mode_pressed"]
 [connection signal="value_changed" from="UI/QuaternionUI/Angle" to="." method="_on_quaternion_angle_value_changed"]
 [connection signal="button_up" from="UI/QuaternionUI/RotateButton" to="." method="_on_rotate_quaternion_button_button_up"]
+[connection signal="button_up" from="UI/ResetButton" to="." method="_on_reset_button_up"]

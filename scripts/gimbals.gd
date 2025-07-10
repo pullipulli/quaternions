@@ -31,7 +31,8 @@ var gimbal_x_instance : Node3D
 var gimbal_y_instance : Node3D
 var gimbal_z_instance : Node3D
 
-var order_to_axis : Dictionary = {}
+var is_rotating : bool
+var target_rotation : Vector3
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -85,6 +86,11 @@ func _set_gimbal_hierarchy() -> void:
 	second.scale = Vector3(0.9, 0.9, 0.9)
 	third.scale = Vector3(0.8, 0.8, 0.8)
 	
+	first.rotation = Vector3.ZERO
+	second.rotation = Vector3.ZERO
+	third.rotation = Vector3.ZERO
+	$"..".set_sliders(Vector3.ZERO)
+	
 	third.add_child(airplane_instance)
 	second.add_child(third)
 	first.add_child(second)
@@ -115,3 +121,42 @@ func _on_enable_gimbals():
 	get_parent().remove_child(airplane_instance)
 	third.add_child(airplane_instance)
 	airplane_instance.rotation = Vector3.ZERO
+
+func _process(delta: float) -> void:
+	if is_rotating:
+		var toTarget = target_rotation - second.rotation
+		if toTarget != Vector3.ZERO:
+			second.rotation = second.rotation.move_toward(target_rotation, TAU * delta)
+			var x_degrees = rad_to_deg(second.rotation.x)
+			var y_degrees = rad_to_deg(second.rotation.y)
+			var z_degrees = rad_to_deg(second.rotation.z)
+			$"..".set_sliders(Vector3(x_degrees, y_degrees, z_degrees))
+		else: is_rotating = false
+
+func _on_gimbal_lock_button_up() -> void:
+	_handle_gimbal_lock_buttons(true)
+
+
+func _on_gimbal_lock2_button_up() -> void:
+	_handle_gimbal_lock_buttons(false)
+		
+		
+func _handle_gimbal_lock_buttons(is_positive: bool):
+	target_rotation = Vector3.ZERO
+	is_rotating = true
+	var angle : float = -PI/2
+	
+	if is_positive:
+		angle = PI/2
+	
+	if (second == gimbal_x_instance):
+		target_rotation.x = angle
+	elif (second == gimbal_y_instance):
+		target_rotation.y = angle
+	elif (second == gimbal_z_instance):
+		target_rotation.z = angle
+
+func reset_gimbals():
+	first.rotation = Vector3.ZERO
+	second.rotation = Vector3.ZERO
+	third.rotation = Vector3.ZERO

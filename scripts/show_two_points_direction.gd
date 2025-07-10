@@ -82,3 +82,7 @@ func rotate_around_axis(angle : float):
 	
 	airplane_instance.rotate(axis, radians)
 	
+	
+func reset_quaternion():
+	var airplane_instance : Node3D = %GimbalsAndAirplane.airplane_instance
+	airplane_instance.rotation = Vector3.ZERO

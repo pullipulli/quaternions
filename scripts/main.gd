@@ -51,7 +51,12 @@ func _on_y_slider_value_changed(value: float) -> void:
 func _on_z_slider_value_changed(value: float) -> void:
 	%GimbalsAndAirplane.rotate_z_gimbal(value)
 
+func set_sliders(new_rotation : Vector3):
+	x_slider.set_value_no_signal(clampf(new_rotation.x, x_slider.min_value, x_slider.max_value))
+	y_slider.set_value_no_signal(clampf(new_rotation.y, y_slider.min_value, y_slider.max_value))
+	z_slider.set_value_no_signal(clampf(new_rotation.z, z_slider.min_value, z_slider.max_value))
 
+	
 func _on_switch_rotation_mode_pressed() -> void:
 	if current_mode == RotationMode.QUATERNION:
 		current_mode = RotationMode.EULER
@@ -79,3 +84,10 @@ func _on_rotate_quaternion_button_button_up() -> void:
 func _on_quaternion_angle_value_changed(value: float) -> void:
 	quaternion_angle_label.text = str(value) + ' °'
 	%ShowTwoPointsDirection.calculate_quaternion(value)
+	
+
+func _on_reset_button_up() -> void:
+	%GimbalsAndAirplane.reset_gimbals()
+	set_sliders(Vector3.ZERO)
+	%ShowTwoPointsDirection.reset_quaternion()
+	_on_reset_quaternion_angle()
