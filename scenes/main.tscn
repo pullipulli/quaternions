@@ -35,8 +35,20 @@ quaternion_angle_label = NodePath("UI/QuaternionUI/AngleLabel")
 layout_mode = 3
 anchors_preset = 0
 
-[node name="GimbalsUI" type="Node2D" parent="UI"]
-position = Vector2(16, 72)
+[node name="SwitchBackground" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = 16.0
+offset_right = 327.0
+offset_bottom = 72.0
+color = Color(0.0862745, 0.180392, 0.180392, 0.235294)
+
+[node name="GimbalsUI" type="ColorRect" parent="UI"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 72.0
+offset_right = 329.0
+offset_bottom = 377.0
+color = Color(0.0862745, 0.180392, 0.180392, 0.235294)
 
 [node name="GimbalsOrderSelect" type="OptionButton" parent="UI/GimbalsUI"]
 offset_top = 29.0
@@ -188,9 +200,14 @@ grow_horizontal = 0
 grow_vertical = 2
 text = "Euler"
 
-[node name="QuaternionUI" type="Node2D" parent="UI"]
+[node name="QuaternionUI" type="ColorRect" parent="UI"]
 visible = false
-position = Vector2(16, 72)
+layout_mode = 0
+offset_left = 16.0
+offset_top = 72.0
+offset_right = 401.0
+offset_bottom = 190.0
+color = Color(0.0862745, 0.180392, 0.180392, 0.235294)
 
 [node name="AngleLabel" type="Label" parent="UI/QuaternionUI"]
 offset_right = 163.0

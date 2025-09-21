@@ -9,10 +9,10 @@ enum RotationMode
 }
 
 @export
-var gimbals_ui : Node2D
+var gimbals_ui : ColorRect
 
 @export
-var quaternions_ui : Node2D
+var quaternions_ui : ColorRect
 
 @export
 var x_slider : HSlider
